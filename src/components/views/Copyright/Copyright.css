@@ -1,0 +1,11 @@
+.CopyrightStyle {
+    background: linear-gradient(to right,#536349, #69380f);
+    position: absolute;
+    background-color: #101018f8;
+    color: #fff;
+    font-size: 1em;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    padding: 12px 0;
+  }
