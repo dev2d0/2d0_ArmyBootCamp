@@ -5,8 +5,7 @@ div{
 .top-bar {
     width: 100%;
     height: 70px;
-    background: linear-gradient(to right, #536349, #69380f); 
-    box-shadow: 0ox 0ox 10ox 0ox rgba(black, 0.15);
+    background: linear-gradient(to right, #536349, #69380f);
     display: flex;
     flex-shrink: 0;
     justify-content: center;

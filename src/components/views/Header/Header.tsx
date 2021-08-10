@@ -1,7 +1,7 @@
 import React from 'react'
-import './Title.css'
+import './Header.css'
 
-export const Title = () => {
+export const Header = () => {
     return (
         <div>
             <div className='top-bar'>
