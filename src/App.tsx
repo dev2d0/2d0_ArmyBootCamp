@@ -8,18 +8,20 @@ import { Header } from './components/views/Header/Header';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
-  return (
-      <div className="App">
-        <Router></Router>
-        <Header></Header>
-          <div className="container-box">
-              <Letter></Letter>
-              <hr />
-              <Intro></Intro>
-          </div>
-        <Copyright></Copyright>
-      </div>
-  );
+    return (
+        <>
+            <div className="App">
+                <Router></Router>
+                <Header />
+                <div className="container-box">
+                    <Letter />
+                    <hr />
+                    <Intro />
+                </div>
+            </div>
+            <Copyright />
+        </>
+    );
 }
 
 export default App;

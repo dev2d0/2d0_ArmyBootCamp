@@ -1,10 +1,22 @@
 .App {
     background-color: #e9ecf1;
+    min-height: 100vh;
+    -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
 }
 
 .container-box {
     width: 80%;
     margin: 0 auto;
+}
+
+@media (max-width: 990px) {
+    .container-box {
+        width: 90%;
+    }
 }
 
 .App hr {

@@ -5,10 +5,40 @@
 
 .about {
     background-color: transparent;
-    font-size: 1.1em;
+    font-size: 1.0em;
 }
 
 .details {
     background-color: rgba(255, 255, 255, 0.877);
     text-align:left;
+}
+
+.background {
+    background: white;
+    width: 80%;
+    margin: 0 auto;
+    padding: 8px;
+}
+
+.text {
+    text-align: left;
+    margin-left: 1.5rem;
+    font-size: 1rem;
+}
+
+@media (max-width: 990px) {
+    .background {
+        width: 100%;
+    }
+    .profile {
+        display: inline;
+        width : 75%;
+        align-items: center;
+        background-color: lightblue;
+        margin-bottom: 10px;
+    }
+    .text {
+        margin-left: 0rem;
+        font-size: 0.7rem;
+    }
 }
