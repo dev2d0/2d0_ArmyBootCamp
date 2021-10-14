@@ -18,6 +18,7 @@ export default function LetterForm(): ReactElement {
                 if (response.data.success) {
                     console.log(response.data)
                     alert("편지 저장에 성공하였습니다.")
+                    window.location.reload();
                 } else {
                     alert('편지 보내기에 실패햐였습니다.')
                 }

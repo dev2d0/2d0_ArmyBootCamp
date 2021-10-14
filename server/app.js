@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const router = express.Router();
 const fs = require('fs')
 const mongoose = require('mongoose');
 const config = require("./config/key");
@@ -20,18 +19,6 @@ app.get('/', (req, res) => {
     res.send('hello express')
 });
 
-app.post('/api/send', (req, res) => {
-    const letter = {
-        user: `${req.user}`,
-        title: `${req.title}`,
-        contents: `${req.contents}`
-    }
-    const letterJson = JSON.stringify(letter)
-    fs.writeFile('./Letter.json',letterJson,'utf8',function (){});
-    console.log("asdasda")
-    res.send('hello express')
-});
-
 app.post("/api/letter", (req, res) => {
     const letter = new Letter(req.body)
     letter.save((err) => {
@@ -40,8 +27,7 @@ app.post("/api/letter", (req, res) => {
     })
 });
 
-app.get('/api/getLetters', (res, req) => {
-    console.log("편지 가져오기")
+app.get('/getLetters', (req, res) => {
     let findArgs = {};
     Letter.find(findArgs)//괄호가 빈칸이면 모든 정보를 가져오는 것
         .exec((err, letterInfo) => {//정상 동작 하면 travelInfo에 정보가 들어감
@@ -51,6 +37,16 @@ app.get('/api/getLetters', (res, req) => {
                 postSize: letterInfo.length//배열 길이가 총 게시글의 개수
             })
         })
+})
+
+app.post('/sendToTrue', (req, res) => {
+    console.log("sendToTrue")
+    Letter.findOneAndUpdate({ _id: req.body._id }, { send: true }, (err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).send({
+            success: true
+        });
+    });
 })
 
 app.use(cors())
