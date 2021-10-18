@@ -5,6 +5,7 @@ const config = require("./config/key");
 const cron = require('node-cron');
 const bodyParser = require("body-parser");
 const { Letter } = require("./models/Letter");
+const { Unit } = require("./models/Unit");
 const SendLetter = require("./SendLetter");
 const AutoSendNews = require("./AutoSendNews");
 const app = express();
@@ -16,7 +17,6 @@ const connect = mongoose.connect(config.mongoURI)
 
 
 app.get('/', (req, res) => {
-
     res.send('hello express')
 });
 
@@ -32,6 +32,15 @@ app.post("/api/letter", async (req, res) => {
     })
 });
 
+app.post('/api/setting', (req, res) => {
+    Unit.findOneAndUpdate({ setting: "setting" }, { unit: req.body.unit }, (err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).send({
+            success: true
+        });
+    });
+})
+
 app.get('/getLetters', (req, res) => {
     let findArgs = {};
     Letter.find(findArgs)//괄호가 빈칸이면 모든 정보를 가져오는 것
@@ -44,8 +53,18 @@ app.get('/getLetters', (req, res) => {
         })
 })
 
+app.get('/getUnit', (req, res) => {
+    let findArgs = {};
+    Unit.findOne(findArgs)//괄호가 빈칸이면 모든 정보를 가져오는 것
+        .exec((err, unitInfo) => {
+            if (err) return res.status(400).json({ success: false, err })
+            return res.status(200).json({
+                success: true, unitInfo
+            })
+        })
+})
+
 app.post('/sendToTrue', (req, res) => {
-    console.log("sendToTrue")
     Letter.findOneAndUpdate({ _id: req.body._id }, { send: true }, (err, doc) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).send({
@@ -80,4 +99,13 @@ cron.schedule('* * * * *', async function(){
 cron.schedule('0 12 * * * ', async function(){ // 매일 12시 0분에 실행.
     console.log('node-cron 실행 테스트');
     await AutoSendNews.SendNews();
+});
+
+// Set static folder
+// All the javascript and css files will be read and served from this folder
+app.use(express.static("front/build"));
+
+// index.html for all page routes    html or routing and naviagtion
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../front", "build", "index.html"));
 });

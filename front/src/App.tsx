@@ -1,22 +1,22 @@
 import React from 'react';
 import './App.css';
 import 'antd/dist/antd.css'
-import Intro from './components/views/Intro/Intro'
+import LandingPage from "./components/views/LandingPage/LandingPage";
+import Setting from "./components/views/Setting/Setting"
 import Copyright from './components/views/Copyright/Copyright';
-import Letter from './components/views/Letter/Letter';
 import { Header } from './components/views/Header/Header';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function App() {
     return (
         <>
             <div className="App">
-                <Router></Router>
                 <Header />
                 <div className="container-box">
-                    <Letter />
-                    <hr />
-                    <Intro />
+                    <Router>
+                        <Route exact path="/" component={LandingPage} />
+                        <Route exact path="/setting" component={Setting} />
+                    </Router>
                 </div>
             </div>
             <Copyright />

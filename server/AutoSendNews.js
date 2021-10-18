@@ -32,6 +32,15 @@ const getTitle = (title) => {
 
 exports.SendNews = async function SendNews() {
     dotenv.config();
+    const Unit = await axios.get('http://localhost:3065/getUnit')
+        .then(response => {
+            if (response.data.success) {
+                console.log(response.data)
+                return response.data
+            } else {
+                console.log('유닛 정보를 가져오는 것에 실패하였습니다..')
+            }
+        })
 
     const id = process.env.USER2_ID || '';
     const password = process.env.USER2_PWD || '';
@@ -41,7 +50,7 @@ exports.SendNews = async function SendNews() {
     const enterDate = process.env.ENTER_DATE || '';
     const className = process.env.CLASS_NAME || '';
     const groupName = process.env.GROUP_NAME || '';
-    const unitName = process.env.UNIT_NAME || '';
+    const unitName = Unit.unitInfo.unit || process.env.UNIT_NAME;
 
     const google = await getContent('google');
     const economy = await getContent('economy');

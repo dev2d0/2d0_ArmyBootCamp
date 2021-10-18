@@ -7,17 +7,25 @@ function sleep(t){
 }
 
 exports.Send = async function Send() {
-    console.log("편지 보내기 실행")
     dotenv.config();
     const Letters = await axios.get('http://localhost:3065/getLetters')
         .then(response => {
             if (response.data.success) {
+                console.log(response.data)
                 return response.data
             } else {
                 console.log('편지 보내기에 실패햐였습니다.')
             }
         })
-    console.log("편지 보내기 실행1")
+    const Unit = await axios.get('http://localhost:3065/getUnit')
+        .then(response => {
+            if (response.data.success) {
+                console.log(response.data)
+                return response.data
+            } else {
+                console.log('유닛 정보를 가져오는 것에 실패하였습니다..')
+            }
+        })
     const id = process.env.USER1_ID || '';
     const password = process.env.USER1_PWD || '';
 
@@ -26,8 +34,9 @@ exports.Send = async function Send() {
     const enterDate = process.env.ENTER_DATE || '';
     const className = process.env.CLASS_NAME || '';
     const groupName = process.env.GROUP_NAME || '';
-    const unitName = process.env.UNIT_NAME || '';
-    console.log("편지 보내기 실행2")
+    const unitName = Unit.unitInfo.unit ?? process.env.UNIT_NAME;
+
+    console.log("adssad" + unitName)
     const soldier = new thecamp.Soldier(
         name,
         birth,
