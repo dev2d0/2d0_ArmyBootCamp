@@ -1,7 +1,7 @@
 {
   "name": "bootcamp-letter-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "bootcamp-letter",
   "main": "app.js",
   "engine": {
     "node": "14.17.4",
