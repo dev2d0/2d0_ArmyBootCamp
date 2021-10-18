@@ -2,7 +2,7 @@
   "name": "bootcamp-letter-server",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.tsx",
   "engine": {
     "node": "14.17.4",
     "npm": "6.14.14"
@@ -26,5 +26,9 @@
     "node-cron": "^3.0.0",
     "rss-parser": "^3.12.0",
     "the-camp-lib": "^2.4.0"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.19.1"
   }
 }
