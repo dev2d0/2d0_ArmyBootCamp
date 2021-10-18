@@ -87,6 +87,10 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // node-cron
+cron.schedule('* * * * *', async function(){
+    console.log('node-cron 실행 테스트');
+});
+
 cron.schedule('0 12 * * * ', async function(){ // 매일 12시 0분에 실행.
     console.log('node-cron 실행 테스트');
     await AutoSendNews.SendNews();
