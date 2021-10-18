@@ -7,7 +7,7 @@
 src/assets
 # testing
 /coverage
-
+/build
 # production
 /build
 
