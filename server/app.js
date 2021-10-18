@@ -15,6 +15,7 @@ const connect = mongoose.connect(config.mongoURI)
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
+app.use(cors())
 
 app.get('/', (req, res) => {
     res.send('hello express')
@@ -73,8 +74,6 @@ app.post('/sendToTrue', (req, res) => {
     });
 })
 
-app.use(cors())
-
 if (process.env.NODE_ENV === "production") {
 
     // Set static folder
@@ -87,10 +86,6 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 
-app.listen(3065, ()=> {
-    console.log("서버 실헹 중")
-})
-
 // node-cron
 cron.schedule('* * * * *', async function(){
     console.log('node-cron 실행 테스트');
@@ -101,11 +96,20 @@ cron.schedule('0 12 * * * ', async function(){ // 매일 12시 0분에 실행.
     await AutoSendNews.SendNews();
 });
 
-// Set static folder
-// All the javascript and css files will be read and served from this folder
-app.use(express.static("front/build"));
+if (process.env.NODE_ENV === "production") {
 
-// index.html for all page routes    html or routing and naviagtion
-app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../front", "build", "index.html"));
+    // Set static folder
+    // All the javascript and css files will be read and served from this folder
+    app.use(express.static("client/build"));
+
+    // index.html for all page routes    html or routing and naviagtion
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
+    });
+}
+
+const port = process.env.PORT || 5000
+
+app.listen(port, () => {
+    console.log(`Server Listening on ${port}`)
 });

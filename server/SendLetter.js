@@ -6,7 +6,7 @@ function sleep(t){
 }
 
 exports.Send = async function Send() {
-    const Letters = await axios.get('http://localhost:3065/getLetters')
+    const Letters = await axios.get('http://localhost:5000/getLetters')
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
@@ -15,7 +15,7 @@ exports.Send = async function Send() {
                 console.log('편지 보내기에 실패햐였습니다.')
             }
         })
-    const Unit = await axios.get('http://localhost:3065/getUnit')
+    const Unit = await axios.get('http://localhost:5000/getUnit')
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
