@@ -1,0 +1,13 @@
+{
+  "google": "https://news.google.com/rss?gl=KR&hl=ko&ceid=KR:ko",
+  "economy": "http://rss.donga.com/economy.xml",
+  "culture": "http://rss.donga.com/culture.xml",
+  "sports": "http://rss.donga.com/sports.xml",
+  "national": "http://rss.donga.com/national.xml",
+  "science": "http://rss.donga.com/science.xml",
+  "stock": "http://www.mbn.co.kr/rss/stock/",
+  "estate": "http://www.mbn.co.kr/rss/estate/",
+  "world": "https://news.google.com/rss?pz=1&hl=ko&topic=w&gl=KR&ceid=KR:ko",
+  "eco": "https://news.google.com/rss?pz=1&hl=ko&topic=b&gl=KR&ceid=KR:ko",
+  "ent": "https://news.google.com/rss?pz=1&hl=ko&topic=e&gl=KR&ceid=KR:ko"
+}

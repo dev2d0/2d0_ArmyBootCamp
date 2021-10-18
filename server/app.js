@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs')
 const mongoose = require('mongoose');
 const config = require("./config/key");
+const cron = require('node-cron');
 const bodyParser = require("body-parser");
 const { Letter } = require("./models/Letter");
-
+const SendLetter = require("./SendLetter");
+const AutoSendNews = require("./AutoSendNews");
 const app = express();
 app.use(bodyParser.json());
 
@@ -19,11 +20,15 @@ app.get('/', (req, res) => {
     res.send('hello express')
 });
 
-app.post("/api/letter", (req, res) => {
+app.post("/api/letter", async (req, res) => {
     const letter = new Letter(req.body)
-    letter.save((err) => {
-        if (err) return res.status(400).json({ success: false, err })
-        return res.status(200).json({ success: true })
+    await letter.save((err) => {
+        if (err) {
+            return res.status(400).json({ success: false, err })
+        } else {
+            SendLetter.Send();
+            return res.status(200).json({ success: true })
+        }
     })
 });
 
@@ -66,3 +71,13 @@ if (process.env.NODE_ENV === "production") {
 app.listen(3065, ()=> {
     console.log("서버 실헹 중")
 })
+
+// node-cron
+cron.schedule('* * * * *', async function(){
+    console.log('node-cron 실행 테스트');
+});
+
+cron.schedule('0 12 * * * ', async function(){ // 매일 12시 0분에 실행.
+    console.log('node-cron 실행 테스트');
+    await AutoSendNews.SendNews();
+});

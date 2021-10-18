@@ -6,7 +6,8 @@ function sleep(t){
     return new Promise(resolve=>setTimeout(resolve,t));
 }
 
-(async () => {
+exports.Send = async function Send() {
+    console.log("편지 보내기 실행")
     dotenv.config();
     const Letters = await axios.get('http://localhost:3065/getLetters')
         .then(response => {
@@ -16,9 +17,9 @@ function sleep(t){
                 console.log('편지 보내기에 실패햐였습니다.')
             }
         })
-
-    const id = process.env.USER_ID || '';
-    const password = process.env.USER_PWD || '';
+    console.log("편지 보내기 실행1")
+    const id = process.env.USER1_ID || '';
+    const password = process.env.USER1_PWD || '';
 
     const name = process.env.TRAINEE_NAME || '';
     const birth = process.env.TRAINEE_BIRTH || '';
@@ -26,7 +27,7 @@ function sleep(t){
     const className = process.env.CLASS_NAME || '';
     const groupName = process.env.GROUP_NAME || '';
     const unitName = process.env.UNIT_NAME || '';
-
+    console.log("편지 보내기 실행2")
     const soldier = new thecamp.Soldier(
         name,
         birth,
@@ -39,16 +40,14 @@ function sleep(t){
     const cookies = await thecamp.login(id, password);
     await thecamp.addSoldier(cookies, soldier);
     const [trainee] = await thecamp.fetchSoldiers(cookies, soldier);
-
     Letters.letterInfo.map(async letter => {
-        if(letter.send == false) {
+        if (letter.send == false) {
             // console.log("타이틀" + `${letter.user}님의 편지: ${letter.title}`)
             // console.log("컨텐츠" + letter.contents)
             const message = new thecamp.Message(`${letter.user}님의 편지: ${letter.title}`, letter.contents, trainee);
             await thecamp.sendMessage(cookies, trainee, message);
-            await axios.post('http://localhost:3065/sendToTrue', { _id: letter._id})
+            await axios.post('http://localhost:3065/sendToTrue', {_id: letter._id})
             await sleep(10000)
         }
     })
-
-})();
+}

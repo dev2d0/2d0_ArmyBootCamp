@@ -16,14 +16,12 @@ export default function LetterForm(): ReactElement {
         axios.post('/api/letter', letter)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data)
-                    alert("편지 저장에 성공하였습니다.")
+                    alert("편지를 전송하였습니다.")
                     window.location.reload();
                 } else {
                     alert('편지 보내기에 실패햐였습니다.')
                 }
             })
-        alert("편지를 저장하였습니다. 편지는 매일 오전11시, 오후4시에 전송됩니다.")
     };
 
     const onConfirmFailed = (errorInfo: any) => {
