@@ -92,7 +92,7 @@ cron.schedule('* * * * *', async function(){
 });
 
 cron.schedule('0 12 * * * ', async function(){ // 매일 12시 0분에 실행.
-    console.log('node-cron 실행 테스트');
+    console.log('node-cron 편지 테스트');
     await AutoSendNews.SendNews();
 });
 
