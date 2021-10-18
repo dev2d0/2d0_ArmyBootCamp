@@ -42,15 +42,15 @@ exports.SendNews = async function SendNews() {
             }
         })
 
-    const id = process.env.USER2_ID || '';
-    const password = process.env.USER2_PWD || '';
+    const id = Unit.unitInfo.id2 || '';
+    const password = Unit.unitInfo.pwd2 || '';
 
-    const name = process.env.TRAINEE_NAME || '';
-    const birth = process.env.TRAINEE_BIRTH || '';
-    const enterDate = process.env.ENTER_DATE || '';
-    const className = process.env.CLASS_NAME || '';
-    const groupName = process.env.GROUP_NAME || '';
-    const unitName = Unit.unitInfo.unit || process.env.UNIT_NAME;
+    const name = Unit.unitInfo.name || '';
+    const birth = Unit.unitInfo.birth || '';
+    const enterDate = Unit.unitInfo.enter || '';
+    const className = Unit.unitInfo.class || '';
+    const groupName = Unit.unitInfo.group || '';
+    const unitName = Unit.unitInfo.unit || '';
 
     const google = await getContent('google');
     const economy = await getContent('economy');

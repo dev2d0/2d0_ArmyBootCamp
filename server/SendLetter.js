@@ -1,13 +1,11 @@
 const thecamp = require('the-camp-lib');
 const axios = require('axios');
-const dotenv = require('dotenv');
 
 function sleep(t){
     return new Promise(resolve=>setTimeout(resolve,t));
 }
 
 exports.Send = async function Send() {
-    dotenv.config();
     const Letters = await axios.get('http://localhost:3065/getLetters')
         .then(response => {
             if (response.data.success) {
@@ -26,15 +24,15 @@ exports.Send = async function Send() {
                 console.log('유닛 정보를 가져오는 것에 실패하였습니다..')
             }
         })
-    const id = process.env.USER1_ID || '';
-    const password = process.env.USER1_PWD || '';
+    const id = Unit.unitInfo.id1 || '';
+    const password = Unit.unitInfo.pwd1 || '';
 
-    const name = process.env.TRAINEE_NAME || '';
-    const birth = process.env.TRAINEE_BIRTH || '';
-    const enterDate = process.env.ENTER_DATE || '';
-    const className = process.env.CLASS_NAME || '';
-    const groupName = process.env.GROUP_NAME || '';
-    const unitName = Unit.unitInfo.unit ?? process.env.UNIT_NAME;
+    const name = Unit.unitInfo.name || '';
+    const birth = Unit.unitInfo.birth || '';
+    const enterDate = Unit.unitInfo.enter || '';
+    const className = Unit.unitInfo.class || '';
+    const groupName = Unit.unitInfo.group || '';
+    const unitName = Unit.unitInfo.unit || '';
 
     console.log("adssad" + unitName)
     const soldier = new thecamp.Soldier(
