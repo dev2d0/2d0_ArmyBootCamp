@@ -6,7 +6,7 @@ function sleep(t){
 }
 
 exports.Send = async function Send() {
-    let baseUrl = process.env.baseURL || "http://localhost:5000"
+    let baseUrl = process.env.BASE_URL || "http://localhost:5000"
     let port = process.env.PORT || 5000
     let host = process.env.HOST || 'localhost'
     console.log("port"+port)
