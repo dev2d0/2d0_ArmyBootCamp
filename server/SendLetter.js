@@ -1,10 +1,16 @@
 const thecamp = require('the-camp-lib');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
+const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 function sleep(t){
     return new Promise(resolve=>setTimeout(resolve, t));
 }
+
+const app = express();
+
+app.use('/api', createProxyMiddleware({ target: 'http://localhost:5000', changeOrigin: true }));
 
 exports.Send = async function Send() {
     let agent = new HttpsProxyAgent('http://localhost:5000');
@@ -18,15 +24,16 @@ exports.Send = async function Send() {
     console.log("host"+host)
     console.log(baseUrl)
     console.log("편지 보내기")
-    const Letters = await axios.get('https://dongyoung-bootcamp.herokuapp.com/getLetters')
+    const Letters = await axios.get('/api/getLetters')
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
                 return response.data
             } else {
-                console.log('편지 보내기에 실패하였습니다.')
+                console.log('편지 받아오기에 실패하였습니다.')
             }
         })
+    console.log("편지 받아내기")
     const Unit = await axios.get('https://dongyoung-bootcamp.herokuapp.com/getUnit')
         .then(response => {
             if (response.data.success) {

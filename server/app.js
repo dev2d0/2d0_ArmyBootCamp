@@ -33,13 +33,16 @@ app.listen(port, () => {
 const connect = mongoose.connect(config.mongoURI)
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
-
+/*
 let corsOptions = {
     origin: 'https://dongyoung-bootcamp.herokuapp.com/',
     credentials: true
 }
 
 app.use(cors(corsOptions))
+*/
+
+app.use(cors())
 
 app.get('/', (req, res) => {
     res.send('hello express')
@@ -66,7 +69,7 @@ app.post('/api/setting', (req, res) => {
     });
 })
 
-app.get('/getLetters', (req, res) => {
+app.get('/api/getLetters', (req, res) => {
     console.log("getLetters")
     let findArgs = {};
     Letter.find(findArgs)//괄호가 빈칸이면 모든 정보를 가져오는 것
@@ -123,6 +126,3 @@ cron.schedule('0 12 * * * ', async function(){ // 매일 12시 0분에 실행.
     await AutoSendNews.SendNews();
 });
 
-process.on('unhandledRejection', (err, promise) => {
-    console.log('Unhandled Rejection detect:', err.stack || err)
-})
