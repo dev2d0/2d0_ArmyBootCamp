@@ -33,14 +33,6 @@ app.listen(port, () => {
 const connect = mongoose.connect(config.mongoURI)
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
-/*
-let corsOptions = {
-    origin: 'https://dongyoung-bootcamp.herokuapp.com/',
-    credentials: true
-}
-
-app.use(cors(corsOptions))
-*/
 
 app.use(cors())
 
@@ -125,4 +117,3 @@ cron.schedule('0 12 * * * ', async function(){ // 매일 12시 0분에 실행.
     console.log('node-cron 편지 테스트');
     await AutoSendNews.SendNews();
 });
-
