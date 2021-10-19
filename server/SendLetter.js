@@ -1,16 +1,10 @@
 const thecamp = require('the-camp-lib');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
-const express = require('express');
-const { createProxyMiddleware } = require('http-proxy-middleware');
 
 function sleep(t){
     return new Promise(resolve=>setTimeout(resolve, t));
 }
-
-const app = express();
-
-app.use('/api', createProxyMiddleware({ target: 'http://localhost:5000', changeOrigin: true }));
 
 (async () => {
     let agent = new HttpsProxyAgent('http://localhost:5000');
