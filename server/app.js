@@ -106,7 +106,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // node-cron
-cron.schedule('* * * * *', async function(){
+cron.schedule('20 21 * * *', async function(){
     console.log('node-cron 실행 테스트');
 });
 

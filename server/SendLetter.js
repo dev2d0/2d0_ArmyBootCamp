@@ -34,7 +34,6 @@ exports.Send = async function Send() {
     const groupName = Unit.unitInfo.group || '';
     const unitName = Unit.unitInfo.unit || '';
 
-    console.log("adssad" + unitName)
     const soldier = new thecamp.Soldier(
         name,
         birth,

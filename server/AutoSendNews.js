@@ -32,7 +32,7 @@ const getTitle = (title) => {
 
 exports.SendNews = async function SendNews() {
     dotenv.config();
-    const Unit = await axios.get('http://localhost:5000/getUnit')
+    const Unit = await axios.get('/api/getUnit')
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
