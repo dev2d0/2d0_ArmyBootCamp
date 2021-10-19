@@ -7,7 +7,7 @@ function sleep(t){
 }
 
 exports.Send = async function Send() {
-    let agent = new HttpsProxyAgent('http://localhost:5000');
+    let agent = new HttpsProxyAgent('https://dongyoung-bootcamp.herokuapp.com/');
     let baseUrl = process.env.BASE_URL || "http://localhost:5000"
     let port = process.env.PORT || 5000
     let host = process.env.HOST || 'localhost'
@@ -20,7 +20,12 @@ exports.Send = async function Send() {
     console.log(baseUrl)
     console.log("편지 보내기")
 
-    const Letters = await axios.get('/getLetters')
+    const Letters = await axios.get('/getLetters', {
+        proxy: {
+            host: 'dongyoung-bootcamp.herokuapp.com',
+            port: port
+        }
+    })
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
@@ -30,7 +35,7 @@ exports.Send = async function Send() {
             }
         })
     console.log("편지 받아내기")
-    const Unit = await axios.get('/getUnit')
+    const Unit = await axios.get('/api/getUnit')
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)

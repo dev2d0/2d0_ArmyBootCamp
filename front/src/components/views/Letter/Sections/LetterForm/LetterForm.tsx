@@ -61,7 +61,7 @@ export default function LetterForm(): ReactElement {
                     name="contents"
                     rules={[{ required: true, message: '내용을 입력해주세요!' }]}
                 >
-                    <TextArea placeholder="보낼 편지 내용을 입력해주세요." showCount maxLength={1500} rows={5} allowClear  />
+                    <TextArea placeholder="보낼 편지 내용을 입력해주세요." showCount maxLength={1490} rows={5} allowClear  />
                 </Form.Item>
                 <Form.Item wrapperCol={{ xs: {offset:0, span: 16}, lg: {offset:5, span: 16} }}>
                     <Button icon={<SendOutlined />} type="primary" shape="round" htmlType="submit">
