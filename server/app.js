@@ -6,6 +6,7 @@ const config = require("./config/key");
 const cron = require('node-cron');
 const bodyParser = require("body-parser");
 const { Letter } = require("./models/Letter");
+const { Private } = require("./models/Private");
 const { Unit } = require("./models/Unit");
 const SendLetter = require("./SendLetter");
 const AutoSendNews = require("./AutoSendNews");
@@ -43,6 +44,18 @@ app.get('/', (req, res) => {
 app.post("/api/letter", async (req, res) => {
     const letter = new Letter(req.body)
     await letter.save((err) => {
+        if (err) {
+            return res.status(400).json({ success: false, err })
+        } else {
+            SendLetter.Send();
+            return res.status(200).json({ success: true })
+        }
+    })
+});
+
+app.post("/api/privateLetter", async (req, res) => {
+    const privateLetter = new Private(req.body)
+    await privateLetter.save((err) => {
         if (err) {
             return res.status(400).json({ success: false, err })
         } else {

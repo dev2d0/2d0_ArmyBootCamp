@@ -13,6 +13,12 @@ const unitSchema = mongoose.Schema({
     pwd2: {
         type: String
     },
+    id3: {
+        type: String
+    },
+    pwd3: {
+        type: String
+    },
     name: {
         type: String
     },
