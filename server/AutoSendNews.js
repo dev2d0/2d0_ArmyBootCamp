@@ -1,6 +1,6 @@
-const dotenv = require('dotenv');
 const thecamp = require('the-camp-lib');
 const getContent = require('./getContent');
+const {Unit} = require("./models/Unit");
 
 const getTitle = (title) => {
     const d = new Date();
@@ -31,26 +31,18 @@ const getTitle = (title) => {
 };
 
 exports.SendNews = async function SendNews() {
-    dotenv.config();
-    const Unit = await axios.get('/api/getUnit')
-        .then(response => {
-            if (response.data.success) {
-                console.log(response.data)
-                return response.data
-            } else {
-                console.log('유닛 정보를 가져오는 것에 실패하였습니다..')
-            }
-        })
 
-    const id = Unit.unitInfo.id2 || '';
-    const password = Unit.unitInfo.pwd2 || '';
+    const PersonalInfo = await Unit.findOne({})
 
-    const name = Unit.unitInfo.name || '';
-    const birth = Unit.unitInfo.birth || '';
-    const enterDate = Unit.unitInfo.enter || '';
-    const className = Unit.unitInfo.class || '';
-    const groupName = Unit.unitInfo.group || '';
-    const unitName = Unit.unitInfo.unit || '';
+    const id = PersonalInfo.id1 || '';
+    const password = PersonalInfo.pwd1 || '';
+
+    const name = PersonalInfo.name || '';
+    const birth = PersonalInfo.birth || '';
+    const enterDate = PersonalInfo.enter || '';
+    const className = PersonalInfo.class || '';
+    const groupName = PersonalInfo.group || '';
+    const unitName = PersonalInfo.unit || '';
 
     const google = await getContent('google');
     const economy = await getContent('economy');
@@ -62,9 +54,6 @@ exports.SendNews = async function SendNews() {
     const estate = await getContent('estate');
     const world = await getContent('world');
     const eco = await getContent('eco');
-
-    console.log(google)
-    console.log(getTitle('구글'))
 
     function sleep(t) {
         return new Promise(resolve => setTimeout(resolve, t));
