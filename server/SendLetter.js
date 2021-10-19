@@ -20,7 +20,7 @@ exports.Send = async function Send() {
     console.log(baseUrl)
     console.log("편지 보내기")
 
-    const Letters = await axios.get('https://dongyoung-bootcamp.herokuapp.com/api/getLetters')
+    const Letters = await axios.get('/getLetters')
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
@@ -30,7 +30,7 @@ exports.Send = async function Send() {
             }
         })
     console.log("편지 받아내기")
-    const Unit = await axios.get('https://dongyoung-bootcamp.herokuapp.com/api/getUnit')
+    const Unit = await axios.get('/getUnit')
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
@@ -73,7 +73,7 @@ exports.Send = async function Send() {
             await thecamp.sendMessage(cookies, trainee, message);
 
              */
-            await axios.post('https://dongyoung-bootcamp.herokuapp.com/api/sendToTrue', {_id: letter._id})
+            await axios.post('/sendToTrue', {_id: letter._id})
             await sleep(10000)
         }
     })
