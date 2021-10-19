@@ -7,9 +7,18 @@ function sleep(t){
 
 exports.Send = async function Send() {
     let baseUrl = process.env.baseURL || "http://localhost:5000"
+    let port = process.env.PORT || 5000
+    let host = process.env.HOST || 'localhost'
+    console.log("port"+port)
+    console.log("host"+host)
     console.log(baseUrl)
     console.log("편지 보내기")
-    const Letters = await axios.get(`${baseUrl}/getLetters`)
+    const Letters = await axios.get(`/getLetters`, {
+        proxy: {
+            host: host,
+            port: port
+        }
+    })
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
@@ -18,7 +27,12 @@ exports.Send = async function Send() {
                 console.log('편지 보내기에 실패하였습니다.')
             }
         })
-    const Unit = await axios.get(`${baseUrl}/getUnit`)
+    const Unit = await axios.get(`${baseUrl}/getUnit`, {
+        proxy: {
+            host: host,
+            port: port
+        }
+    })
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
@@ -61,7 +75,12 @@ exports.Send = async function Send() {
             await thecamp.sendMessage(cookies, trainee, message);
 
              */
-            await axios.post(`${baseUrl}/sendToTrue`, {_id: letter._id})
+            await axios.post(`${baseUrl}/sendToTrue`, {_id: letter._id}, {
+                proxy: {
+                    host: host,
+                    port: port
+                }
+            })
             await sleep(10000)
         }
     })
