@@ -6,7 +6,7 @@ function sleep(t){
     return new Promise(resolve=>setTimeout(resolve, t));
 }
 
-(async () => {
+exports.Send = async function Send() {
     let agent = new HttpsProxyAgent('http://localhost:5000');
     let baseUrl = process.env.BASE_URL || "http://localhost:5000"
     let port = process.env.PORT || 5000
@@ -77,4 +77,4 @@ function sleep(t){
             await sleep(10000)
         }
     })
-})();
+}
