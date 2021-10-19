@@ -69,7 +69,7 @@ app.post('/api/setting', (req, res) => {
     });
 })
 
-app.get('/api/getLetters', (req, res) => {
+app.get('/getLetters', (req, res) => {
     console.log("getLetters")
     let findArgs = {};
     Letter.find(findArgs)//괄호가 빈칸이면 모든 정보를 가져오는 것
