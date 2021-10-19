@@ -1,23 +1,24 @@
 const thecamp = require('the-camp-lib');
 const axios = require('axios');
+const HttpsProxyAgent = require('https-proxy-agent');
 
 function sleep(t){
     return new Promise(resolve=>setTimeout(resolve, t));
 }
 
 exports.Send = async function Send() {
+    let agent = new HttpsProxyAgent('http://localhost:5000');
     let baseUrl = process.env.BASE_URL || "http://localhost:5000"
     let port = process.env.PORT || 5000
     let host = process.env.HOST || 'localhost'
+    console.log("asdsadsadasdasdasdasdasd")
+    console.log(agent)
     console.log("port"+port)
     console.log("host"+host)
     console.log(baseUrl)
     console.log("편지 보내기")
     const Letters = await axios.get(`/getLetters`, {
-        proxy: {
-            host: host,
-            port: port
-        }
+        httpsAgent: agent
     })
         .then(response => {
             if (response.data.success) {
@@ -28,10 +29,7 @@ exports.Send = async function Send() {
             }
         })
     const Unit = await axios.get(`${baseUrl}/getUnit`, {
-        proxy: {
-            host: host,
-            port: port
-        }
+        httpsAgent: agent
     })
         .then(response => {
             if (response.data.success) {
@@ -76,10 +74,7 @@ exports.Send = async function Send() {
 
              */
             await axios.post(`${baseUrl}/sendToTrue`, {_id: letter._id}, {
-                proxy: {
-                    host: host,
-                    port: port
-                }
+                httpsAgent: agent
             })
             await sleep(10000)
         }
