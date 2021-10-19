@@ -2,17 +2,14 @@ const thecamp = require('the-camp-lib');
 const axios = require('axios');
 
 function sleep(t){
-    return new Promise(resolve=>setTimeout(resolve,t));
+    return new Promise(resolve=>setTimeout(resolve, t));
 }
 
 exports.Send = async function Send() {
+    let baseUrl = process.env.baseURL || "http://localhost:5000"
+    console.log(baseUrl)
     console.log("편지 보내기")
-    const Letters = await axios.get(('/getLetters'), {
-        proxy: {
-            host: 'localhost',
-            port: 5000
-        }
-    })
+    const Letters = await axios.get(`${baseUrl}/getLetters`)
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
@@ -21,12 +18,7 @@ exports.Send = async function Send() {
                 console.log('편지 보내기에 실패하였습니다.')
             }
         })
-    const Unit = await axios.get(('/getUnit'), {
-        proxy: {
-            host: 'localhost',
-            port: 5000
-        }
-    })
+    const Unit = await axios.get((`${baseUrl}/getUnit`)
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
@@ -69,12 +61,7 @@ exports.Send = async function Send() {
             await thecamp.sendMessage(cookies, trainee, message);
 
              */
-            await axios.post('/sendToTrue', {_id: letter._id}, {
-                proxy: {
-                    host: 'localhost',
-                    port: 5000
-                }
-            })
+            await axios.post(`${baseUrl}/sendToTrue`, {_id: letter._id})
             await sleep(10000)
         }
     })
