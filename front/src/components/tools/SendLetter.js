@@ -7,26 +7,17 @@ function sleep(t){
 
 exports.Send = async function Send() {
     console.log("편지 보내기")
-    const Letters = await axios.get(('/getLetters'), {
-        proxy: {
-            host: 'localhost',
-            port: 5000
-        }
-    })
+    const Letters = await axios.get('/api/getLetters')
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
                 return response.data
             } else {
-                console.log('편지 보내기에 실패하였습니다.')
+                console.log('편지 가져오기에 실패하였습니다.')
             }
         })
-    const Unit = await axios.get(('/getUnit'), {
-        proxy: {
-            host: 'localhost',
-            port: 5000
-        }
-    })
+    console.log("편지 보내기1")
+    const Unit = await axios.get('/api/getUnit')
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
@@ -54,27 +45,16 @@ exports.Send = async function Send() {
         unitName,
         thecamp.SoldierRelationship.FRIEND,
     );
-    /*
     const cookies = await thecamp.login(id, password);
     await thecamp.addSoldier(cookies, soldier);
     const [trainee] = await thecamp.fetchSoldiers(cookies, soldier);
-
-     */
     Letters.letterInfo.map(async letter => {
         if (letter.send == false) {
-             console.log("타이틀" + `${letter.user}님의 편지: ${letter.title}`)
-             console.log("컨텐츠" + letter.contents)
-            /*
+            // console.log("타이틀" + `${letter.user}님의 편지: ${letter.title}`)
+            // console.log("컨텐츠" + letter.contents)
             const message = new thecamp.Message(`${letter.user}님의 편지: ${letter.title}`, letter.contents, trainee);
             await thecamp.sendMessage(cookies, trainee, message);
-
-             */
-            await axios.post('/sendToTrue', {_id: letter._id}, {
-                proxy: {
-                    host: 'localhost',
-                    port: 5000
-                }
-            })
+            await axios.post('http://localhost:3065/sendToTrue', {_id: letter._id})
             await sleep(10000)
         }
     })

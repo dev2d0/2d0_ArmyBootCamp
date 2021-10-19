@@ -61,8 +61,8 @@ app.post('/api/setting', (req, res) => {
     });
 })
 
-app.get('/api/getLetters', (req, res) => {
-    console.log("aaaaaa")
+app.get('/getLetters', (req, res) => {
+    console.log("getLetters")
     let findArgs = {};
     Letter.find(findArgs)//괄호가 빈칸이면 모든 정보를 가져오는 것
         .exec((err, letterInfo) => {
@@ -74,7 +74,8 @@ app.get('/api/getLetters', (req, res) => {
         })
 })
 
-app.get('/api/getUnit', (req, res) => {
+app.get('/getUnit', (req, res) => {
+    console.log("getUnit")
     let findArgs = {};
     Unit.findOne(findArgs)//괄호가 빈칸이면 모든 정보를 가져오는 것
         .exec((err, unitInfo) => {
@@ -85,7 +86,8 @@ app.get('/api/getUnit', (req, res) => {
         })
 })
 
-app.post('/api/sendToTrue', (req, res) => {
+app.post('/sendToTrue', (req, res) => {
+    console.log("sendToTrue")
     Letter.findOneAndUpdate({ _id: req.body._id }, { send: true }, (err, doc) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).send({
