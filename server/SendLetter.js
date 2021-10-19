@@ -1,21 +1,27 @@
 const thecamp = require('the-camp-lib');
 const axios = require('axios');
+const bodyParser = require("body-parser");
 
 function sleep(t){
     return new Promise(resolve=>setTimeout(resolve,t));
 }
 
-exports.Send = async function Send() {
-    const Letters = await axios.get('http://localhost:5000/getLetters')
+//exports.Send = async function Send() {
+
+(async () => {
+    console.log("편지 보내기")
+    console.log(bodyParser.json())
+    const Letters = await axios.get('https://dongyoung-bootcamp.herokuapp.com/api/getLetters')
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
                 return response.data
             } else {
-                console.log('편지 보내기에 실패햐였습니다.')
+                console.log('편지 가져오기에 실패하였습니다.')
             }
         })
-    const Unit = await axios.get('http://localhost:5000/getUnit')
+    console.log("편지 보내기1")
+    const Unit = await axios.get('https://dongyoung-bootcamp.herokuapp.com/api/getUnit')
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
@@ -56,4 +62,4 @@ exports.Send = async function Send() {
             await sleep(10000)
         }
     })
-}
+})();

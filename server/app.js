@@ -61,10 +61,11 @@ app.post('/api/setting', (req, res) => {
     });
 })
 
-app.get('/getLetters', (req, res) => {
+app.get('/api/getLetters', (req, res) => {
+    console.log("aaaaaa")
     let findArgs = {};
     Letter.find(findArgs)//괄호가 빈칸이면 모든 정보를 가져오는 것
-        .exec((err, letterInfo) => {//정상 동작 하면 travelInfo에 정보가 들어감
+        .exec((err, letterInfo) => {
             if (err) return res.status(400).json({ success: false, err })
             return res.status(200).json({
                 success: true, letterInfo,
@@ -73,7 +74,7 @@ app.get('/getLetters', (req, res) => {
         })
 })
 
-app.get('/getUnit', (req, res) => {
+app.get('/api/getUnit', (req, res) => {
     let findArgs = {};
     Unit.findOne(findArgs)//괄호가 빈칸이면 모든 정보를 가져오는 것
         .exec((err, unitInfo) => {
@@ -84,7 +85,7 @@ app.get('/getUnit', (req, res) => {
         })
 })
 
-app.post('/sendToTrue', (req, res) => {
+app.post('/api/sendToTrue', (req, res) => {
     Letter.findOneAndUpdate({ _id: req.body._id }, { send: true }, (err, doc) => {
         if (err) return res.json({ success: false, err });
         return res.status(200).send({
@@ -114,3 +115,7 @@ cron.schedule('0 12 * * * ', async function(){ // 매일 12시 0분에 실행.
     console.log('node-cron 편지 테스트');
     await AutoSendNews.SendNews();
 });
+
+process.on('unhandledRejection', (err, promise) => {
+    console.log('Unhandled Rejection detect:', err.stack || err)
+})
