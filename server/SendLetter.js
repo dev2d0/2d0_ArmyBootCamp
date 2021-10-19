@@ -18,7 +18,7 @@ exports.Send = async function Send() {
                 console.log('편지 보내기에 실패하였습니다.')
             }
         })
-    const Unit = await axios.get((`${baseUrl}/getUnit`)
+    const Unit = await axios.get(`${baseUrl}/getUnit`)
         .then(response => {
             if (response.data.success) {
                 console.log(response.data)
