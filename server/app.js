@@ -34,7 +34,12 @@ const connect = mongoose.connect(config.mongoURI)
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
-app.use(cors())
+let corsOptions = {
+    origin: 'https://dongyoung-bootcamp.herokuapp.com/',
+    credentials: true
+}
+
+app.use(cors(corsOptions))
 
 app.get('/', (req, res) => {
     res.send('hello express')
