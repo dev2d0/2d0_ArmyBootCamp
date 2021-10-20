@@ -3,14 +3,10 @@ import { Row, Col, Image } from "antd";
 import introImage from '../../../assets/images/intro.jpeg'
 import './Intro.css'
 
-interface Props {
-
-}
-
 const Intro: React.FC = () => {
     return (
         <div className="about">
-            <h2>ABOUT ME</h2>
+            <h2>소개글</h2>
             <Row className="background">
                 <Col xs={24} lg={12}>
                     <Image
@@ -28,6 +24,7 @@ const Intro: React.FC = () => {
                     아무 이야기라도 써주시면 감사하겠습니다.<br />
                     편지 써주신분들 모두 잊지 않겠습니다.<br />
                     감사합니다! (꾸벅)
+                    <h5>카페 개설 이전(10월 26일 예상)에 보내시는 편지는 저장해 두었다가 카페 개설 이후 한번에 보내집니다.</h5>
                     </div>
                     <br />
                 </Col>

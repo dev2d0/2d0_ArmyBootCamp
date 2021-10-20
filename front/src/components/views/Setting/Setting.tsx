@@ -1,8 +1,21 @@
-import React, { ReactElement } from 'react'
+import React, { useEffect, useState, ReactElement } from 'react'
 import {Button, Form, Input} from "antd";
 import axios from 'axios';
 
 export default function Setting(): ReactElement {
+    const [Unit, setUnit] = useState({})
+
+    useEffect(() => {
+        axios.get('/api/getUnit')
+            .then(response => {
+                if (response.data.success) {
+                    setUnit(response.data.unit.unit)
+                } else {
+                    alert('실패햐였습니다.')
+                }
+            })
+    }, [])
+
     const onConfirm = async (values: any) => {
         let unit = {
             unit: values.unit
@@ -47,6 +60,7 @@ export default function Setting(): ReactElement {
                     </Button>
                 </Form.Item>
             </Form >
+            <h3>{`현재 세팅된 입영부대: ${Unit}`}</h3>
         </div>
     )
 }

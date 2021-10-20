@@ -7,11 +7,13 @@ const { TextArea } = Input;
 
 export default function PrivateLetter(): ReactElement {
     const onConfirm = async (values: any) => {
+        if (!window.confirm('보낸 편지는 수정하거나 삭제할 수 없습니다. 정말 보내시겠습니까?')) {
+            return;
+        }
         let letter = {
             title: values.title,
             contents: values.contents
         }
-        console.log(letter)
         axios.post('/api/privateLetter', letter)
             .then(response => {
                 if (response.data.success) {
