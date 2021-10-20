@@ -30,8 +30,11 @@ const getTitle = (title) => {
     return titles[Math.floor(Math.random() * titles.length)];
 };
 
-exports.SendNews = async function SendNews() {
+function sleep(t) {
+    return new Promise(resolve => setTimeout(resolve, t));
+}
 
+exports.SendNews = async function SendNews() {
     const PersonalInfo = await Unit.findOne({})
 
     const id = PersonalInfo.id1 || '';
@@ -55,11 +58,6 @@ exports.SendNews = async function SendNews() {
     const world = await getContent('world');
     const eco = await getContent('eco');
 
-    function sleep(t) {
-        return new Promise(resolve => setTimeout(resolve, t));
-    }
-
-
     const soldier = new thecamp.Soldier(
         name,
         birth,
@@ -70,12 +68,9 @@ exports.SendNews = async function SendNews() {
         thecamp.SoldierRelationship.FRIEND,
     );
 
-    const client = new thecamp.Client();
-    await client.login(id, password);
-    await client.addSoldier(soldier);
-
-    const [trainee] = await client.fetchSoldiers(soldier);
-
+    const cookies = await thecamp.login(id, password);
+    await thecamp.addSoldier(cookies, soldier);
+    const [trainee] = await thecamp.fetchSoldiers(cookies, soldier);
 
     const googleMessage = new thecamp.Message(getTitle('구글'), google, trainee);
     const economyMessage = new thecamp.Message(getTitle('경제'), economy, trainee);
@@ -88,33 +83,23 @@ exports.SendNews = async function SendNews() {
     const worldMessage = new thecamp.Message(getTitle('세계'), world, trainee);
     const ecoMessage = new thecamp.Message(getTitle('환경'), eco, trainee);
 
-
-    await client.sendMessage(soldier, googleMessage).then(
-        await sleep(5000),
-        await client.sendMessage(soldier, economyMessage).then(
-            await sleep(5000),
-            await client.sendMessage(soldier, cultureMessage).then(
-                await sleep(5000),
-                await client.sendMessage(soldier, sportsMessage).then(
-                    await sleep(5000),
-                    await client.sendMessage(soldier, nationalMessage).then(
-                        await sleep(5000),
-                        await client.sendMessage(soldier, scienceMessage).then(
-                            await sleep(5000),
-                            await client.sendMessage(soldier, stockMessage).then(
-                                await sleep(5000),
-                                await client.sendMessage(soldier, estateMessage).then(
-                                    await sleep(5000),
-                                    await client.sendMessage(soldier, worldMessage).then(
-                                        await sleep(5000),
-                                        await client.sendMessage(soldier, ecoMessage)
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        )
-    )
+    await thecamp.sendMessage(cookies, trainee, googleMessage);
+    await sleep(5000);
+    await thecamp.sendMessage(cookies, trainee, economyMessage);
+    await sleep(5000);
+    await thecamp.sendMessage(cookies, trainee, cultureMessage);
+    await sleep(5000);
+    await thecamp.sendMessage(cookies, trainee, sportsMessage);
+    await sleep(5000);
+    await thecamp.sendMessage(cookies, trainee, nationalMessage);
+    await sleep(5000);
+    await thecamp.sendMessage(cookies, trainee, scienceMessage);
+    await sleep(5000);
+    await thecamp.sendMessage(cookies, trainee, stockMessage);
+    await sleep(5000);
+    await thecamp.sendMessage(cookies, trainee, estateMessage);
+    await sleep(5000);
+    await thecamp.sendMessage(cookies, trainee, worldMessage);
+    await sleep(5000);
+    await thecamp.sendMessage(cookies, trainee, ecoMessage);
 }
