@@ -104,3 +104,10 @@ cron.schedule('0 12 * * * ', async function(){ // 매일 12시 0분에 실행.
     console.log('자동 인편 보내기');
     await AutoSendNews.SendNews();
 });
+
+cron.schedule('0 14 * * * ', async function(){ // 매일 14시 0분에 실행.
+    console.log('실패한 인편 job 보내기');
+    await SendLetter.Send();
+    await SendPrivateLetter.Send();
+});
+
